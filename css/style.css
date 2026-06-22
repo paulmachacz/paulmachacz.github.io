@@ -495,7 +495,7 @@ ul { list-style: none; }
 }
 .footer__col a, .footer__col p { color: var(--text-dim); transition: color 0.3s; }
 .footer__col a:hover { color: var(--accent); }
-.footer__socials { display: flex; gap: 16px; }
+.footer__socials { display: flex; flex-direction: column; gap: 10px; }
 .footer__socials a {
   font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.12em;
 }
