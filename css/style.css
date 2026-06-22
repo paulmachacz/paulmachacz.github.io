@@ -539,7 +539,9 @@ ul { list-style: none; }
   .tile--tall { grid-column: span 6; grid-row: span 2; }
 }
 @media (max-width: 540px) {
-  .tile, .tile--wide, .tile--tall, .tile--big { grid-column: span 12; grid-row: span 1; }
+  .grid { grid-auto-rows: clamp(140px, 42vw, 200px); gap: 10px; }
+  .tile, .tile--wide, .tile--big { grid-column: span 6; grid-row: span 1; }
+  .tile--tall { grid-column: span 6; grid-row: span 2; }
   .container { padding: 0 20px; }
 
   .nav { padding: 16px 20px; }
