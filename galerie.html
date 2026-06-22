@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galerie — Paul Machacz</title>
+  <meta name="description" content="Galerie photo de Paul Machacz — animalier, portrait, véhicule, nature et urbanisme." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===== Navigation ===== -->
+  <nav class="nav scrolled">
+    <a href="index.html" class="nav__brand">PAUL<span>.</span></a>
+    <ul class="nav__links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="galerie.html" class="active">Galerie</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <button class="nav__toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+
+  <!-- ===== En-tête de page ===== -->
+  <header class="page-head">
+    <div class="container">
+      <span class="eyebrow">Portfolio</span>
+      <h1>Galerie</h1>
+      <p>Une sélection d'images réparties entre l'animalier, le portrait, le véhicule, la nature et l'urbanisme. Cliquez sur une photo pour l'agrandir.</p>
+    </div>
+  </header>
+
+  <!-- ===== Galerie filtrable ===== -->
+  <section class="section" style="padding-top:10px;">
+    <div class="container">
+      <div class="filters">
+        <button class="filter active" data-filter="all">Tout</button>
+        <button class="filter" data-filter="animalier">Animalier</button>
+        <button class="filter" data-filter="vehicule">Véhicule</button>
+        <button class="filter" data-filter="nature">Nature</button>
+        <button class="filter" data-filter="urbanisme">Urbanisme</button>
+        <button class="filter" data-filter="armee">Armée</button>
+      </div>
+
+      <div class="grid" data-grid></div>
+    </div>
+  </section>
+
+  <!-- ===== Pied de page / Contact ===== -->
+  <footer class="footer" id="contact">
+    <div class="container">
+      <p class="eyebrow reveal">Travaillons ensemble</p>
+      <h2 class="footer__cta reveal">
+        Un projet en tête ?<br>
+        <a href="https://www.instagram.com/paul_photo.raw/" target="_blank" rel="noopener">Contactez-moi sur Instagram →</a>
+      </h2>
+
+      <div class="footer__grid reveal">
+        <div class="footer__col">
+          <h4>Suivez le travail</h4>
+          <div class="footer__socials">
+            <a href="https://www.instagram.com/paul_photo.raw/" target="_blank" rel="noopener">Instagram — @paul_photo.raw</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span>© <span data-year>2026</span> Paul Machacz. Tous droits réservés.</span>
+        <span>Photographe · France</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== Lightbox ===== -->
+  <div class="lightbox" data-lightbox>
+    <button class="lightbox__close" data-lb-close aria-label="Fermer">✕</button>
+    <button class="lightbox__nav prev" data-lb-prev aria-label="Précédent">‹</button>
+    <div data-lb-stage></div>
+    <button class="lightbox__nav next" data-lb-next aria-label="Suivant">›</button>
+    <div class="lightbox__cap" data-lb-cap></div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
