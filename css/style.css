@@ -201,6 +201,8 @@ ul { list-style: none; }
   background:
     radial-gradient(120% 80% at 80% 0%, rgba(122,138,63,0.162), transparent 60%),
     radial-gradient(90% 70% at 0% 100%, rgba(174,180,110,0.09), transparent 55%),
+    radial-gradient(55% 60% at 62% 96%, rgba(196,40,40,0.1), transparent 58%),
+    radial-gradient(45% 45% at 98% 10%, rgba(214,118,40,0.08), transparent 55%),
     linear-gradient(180deg, #0c0c10, #0a0a0c);
   z-index: -2;
 }
