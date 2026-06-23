@@ -102,6 +102,10 @@
         const show = activeCat === "all" || tile.dataset.category === activeCat;
         tile.classList.toggle("hide", !show);
       });
+
+      document.querySelectorAll("[data-banner]").forEach((banner) => {
+        banner.classList.toggle("show", banner.dataset.banner === activeCat);
+      });
     }
 
     filters.forEach((btn) => {
