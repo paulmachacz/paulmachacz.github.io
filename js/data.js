@@ -35,7 +35,6 @@ const PHOTOS = [
   { file: "vehicule/vehicule-pont-rouge.jpg",     title: "Pont d'atelier",           category: "vehicule",  size: "tall" },
   { file: "vehicule/vehicule-jante-rouge.jpg",    title: "Jante GTS",                category: "vehicule",  size: "tall" },
   { file: "vehicule/vehicule-noir-showroom.jpg",  title: "Noir profond",             category: "vehicule",  size: "tall" },
-  { file: "vehicule/vehicule-spyder-rs.jpg",      title: "Spyder RS",                category: "vehicule",  size: "tall" },
   { file: "vehicule/vehicule-blason.jpg",         title: "Le blason",                category: "vehicule",  size: "tall" },
   { file: "vehicule/vehicule-reflets.jpg",        title: "Reflets en mouvement",     category: "vehicule",  size: "tall" },
   { file: "vehicule/vehicule-face-avant.jpg",     title: "Face avant",               category: "vehicule",  size: "tall" },
