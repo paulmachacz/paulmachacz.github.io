@@ -418,8 +418,11 @@ ul { list-style: none; }
 }
 .lightbox__close, .lightbox__nav {
   position: absolute;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid var(--border);
+  z-index: 5;
+  background: rgba(10,10,12,0.65);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.25);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
   color: var(--text);
   width: 52px; height: 52px;
   border-radius: 50%;
