@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Galerie — Paul Machacz</title>
-  <meta name="description" content="Galerie photo de Paul Machacz — animalier, véhicule, nature, urbanisme et armée." />
+  <title>À propos — Paul Machacz</title>
+  <meta name="description" content="À propos de Paul Machacz, photographe spécialisé en automobile, basé entre Montélimar, Toulouse et Aix-en-Provence." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -19,8 +19,8 @@
     <a href="index.html" class="nav__brand">PAUL<span>.</span></a>
     <ul class="nav__links">
       <li><a href="index.html">Accueil</a></li>
-      <li><a href="galerie.html" class="active">Galerie</a></li>
-      <li><a href="a-propos.html">À propos</a></li>
+      <li><a href="galerie.html">Galerie</a></li>
+      <li><a href="a-propos.html" class="active">À propos</a></li>
       <li><a href="index.html#contact">Contact</a></li>
     </ul>
     <button class="nav__toggle" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -29,25 +29,20 @@
   <!-- ===== En-tête de page ===== -->
   <header class="page-head">
     <div class="container">
-      <span class="eyebrow">Portfolio</span>
-      <h1>Galerie</h1>
-      <p>Une sélection d'images réparties entre l'animalier, le véhicule, la nature, l'urbanisme et l'armée. Cliquez sur une photo pour l'agrandir.</p>
+      <span class="eyebrow">Le photographe</span>
+      <h1>À propos</h1>
     </div>
   </header>
 
-  <!-- ===== Galerie filtrable ===== -->
+  <!-- ===== Texte de présentation ===== -->
   <section class="section" style="padding-top:10px;">
     <div class="container">
-      <div class="filters">
-        <button class="filter active" data-filter="all">Tout</button>
-        <button class="filter" data-filter="animalier">Animalier</button>
-        <button class="filter" data-filter="vehicule">Véhicule</button>
-        <button class="filter" data-filter="nature">Nature</button>
-        <button class="filter" data-filter="urbanisme">Urbanisme</button>
-        <button class="filter" data-filter="armee">Armée</button>
+      <div class="about reveal">
+        <p>Passionné de photographie et d'automobile, je mets en valeur les véhicules à travers des images qui racontent une histoire et révèlent leur caractère. À 22 ans, j'ai développé un style orienté vers la photographie automobile, en accordant une attention particulière aux détails, à la lumière et aux compositions.</p>
+        <p>Basé entre Montélimar, Toulouse et Aix-en-Provence, je me déplace pour réaliser des shootings de voitures, qu'il s'agisse de véhicules de collection, de sport, de prestige ou de projets destinés aux particuliers et aux professionnels.</p>
+        <p>En parallèle de l'automobile, je pratique aussi la photographie animalière, la nature et l'univers militaire — des passions que je cultive avec la même exigence de lumière et de composition, et que vous retrouverez dans ma galerie.</p>
+        <p>Mon objectif est de créer des images authentiques et soignées, qui mettent en valeur chaque véhicule et répondent aux attentes de mes clients.</p>
       </div>
-
-      <div class="grid" data-grid></div>
     </div>
   </section>
 
@@ -76,15 +71,6 @@
       </div>
     </div>
   </footer>
-
-  <!-- ===== Lightbox ===== -->
-  <div class="lightbox" data-lightbox>
-    <button class="lightbox__close" data-lb-close aria-label="Fermer">✕</button>
-    <button class="lightbox__nav prev" data-lb-prev aria-label="Précédent">‹</button>
-    <div data-lb-stage></div>
-    <button class="lightbox__nav next" data-lb-next aria-label="Suivant">›</button>
-    <div class="lightbox__cap" data-lb-cap></div>
-  </div>
 
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>

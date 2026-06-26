@@ -510,6 +510,19 @@ ul { list-style: none; }
   font-size: 0.74rem; color: var(--text-faint);
 }
 
+/* ---------- À propos ---------- */
+.about { max-width: 680px; }
+.about p {
+  color: var(--text-dim);
+  font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+  line-height: 1.75;
+  margin-bottom: 22px;
+}
+.about p:first-child {
+  color: var(--text);
+  font-size: clamp(1.2rem, 1.7vw, 1.5rem);
+}
+
 /* ---------- Page header (sous-pages) ---------- */
 .page-head { padding: clamp(130px, 18vw, 210px) 0 40px; position: relative; }
 .page-head h1 {
