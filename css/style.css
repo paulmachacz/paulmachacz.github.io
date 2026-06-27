@@ -266,6 +266,7 @@ ul { list-style: none; }
   opacity: 0;
   animation: fade 1s var(--ease) 0.55s forwards;
 }
+.hero__tags-group { display: flex; flex-direction: column; gap: 10px; }
 .hero__tags { display: flex; flex-wrap: wrap; gap: 10px; }
 .hero__tags span,
 .hero__tags a {

@@ -11,7 +11,7 @@
                 (laisser "" pour une tuile standard)
 
    Catégories disponibles :
-     animalier · vehicule · nature · urbanisme · armee
+     animalier · vehicule · nature · urbanisme · armee · post-traitement
 
    👉 Déposez vos fichiers JPG dans le sous-dossier "images/<categorie>"
       puis remplacez les lignes ci-dessous par les vôtres.
@@ -44,10 +44,11 @@ const PHOTOS = [
 
 /* Libellés affichés des catégories (filtres et légendes) */
 const CATEGORY_LABELS = {
-  all:       "Tout",
-  animalier: "Animalier",
-  vehicule:  "Véhicule",
-  nature:    "Nature",
-  urbanisme: "Urbanisme",
-  armee:     "Armée",
+  all:            "Tout",
+  animalier:      "Animalier",
+  vehicule:       "Véhicule",
+  nature:         "Nature",
+  urbanisme:      "Urbanisme",
+  armee:          "Armée",
+  "post-traitement": "Post-traitement",
 };
