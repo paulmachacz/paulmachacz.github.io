@@ -21,7 +21,7 @@
   }
 
   /* ---------- Effet de contour en degrade sur les boutons de la page d'accueil ---------- */
-  initTextHoverButtons(document.querySelectorAll(".hero .btn, .hero__tags a"));
+  initTextHoverButtons(document.querySelectorAll(".btn, .hero__tags a"));
 
   /* ---------- Apparition au scroll ---------- */
   const revealObserver = new IntersectionObserver(
