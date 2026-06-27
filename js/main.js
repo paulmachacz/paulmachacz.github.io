@@ -115,61 +115,17 @@
     initTextHoverButtons(filters);
   }
 
-  /* ---------- Effet "Text Hover" (inspiré d'Aceternity UI) sur les boutons de filtre ---------- */
+  /* ---------- Effet de degrade au survol sur le contour des boutons de filtre ---------- */
   function initTextHoverButtons(buttons) {
     if (!buttons || !buttons.length) return;
-    let uid = 0;
 
     buttons.forEach((btn) => {
-      const label = btn.textContent.trim();
-      if (!label) return;
-
-      const gradId = "thGrad" + uid;
-      const maskId = "thMask" + uid;
-      const radId = "thRad" + uid;
-      uid++;
-
-      btn.innerHTML =
-        '<svg class="th-svg" viewBox="0 0 300 100" preserveAspectRatio="xMidYMid meet">' +
-          "<defs>" +
-            '<linearGradient id="' + gradId + '" gradientUnits="userSpaceOnUse" x1="0%" y1="0%" x2="100%" y2="0%">' +
-              '<stop offset="0%" stop-color="#eab308" />' +
-              '<stop offset="25%" stop-color="#ef4444" />' +
-              '<stop offset="50%" stop-color="#3b82f6" />' +
-              '<stop offset="75%" stop-color="#06b6d4" />' +
-              '<stop offset="100%" stop-color="#8b5cf6" />' +
-            "</linearGradient>" +
-            '<radialGradient id="' + radId + '" gradientUnits="userSpaceOnUse" cx="50%" cy="50%" r="0%">' +
-              '<stop offset="0%" stop-color="white" />' +
-              '<stop offset="100%" stop-color="black" />' +
-            "</radialGradient>" +
-            '<mask id="' + maskId + '">' +
-              '<rect x="0" y="0" width="100%" height="100%" fill="url(#' + radId + ')" />' +
-            "</mask>" +
-          "</defs>" +
-          '<text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" class="th-outline">' + label + "</text>" +
-          '<text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" class="th-fill" stroke="url(#' + gradId + ')" mask="url(#' + maskId + ')">' + label + "</text>" +
-        "</svg>";
-
-      const rad = btn.querySelector("#" + radId);
-      let raf = null;
-      let targetR = "0%";
-
-      const apply = () => {
-        rad.setAttribute("r", targetR);
-        raf = null;
-      };
-      const queue = () => { if (!raf) raf = window.requestAnimationFrame(apply); };
-
+      btn.classList.add("th-border");
       btn.addEventListener("mousemove", (e) => {
         const r = btn.getBoundingClientRect();
-        const cx = ((e.clientX - r.left) / r.width) * 100 + "%";
-        const cy = ((e.clientY - r.top) / r.height) * 100 + "%";
-        rad.setAttribute("cx", cx);
-        rad.setAttribute("cy", cy);
+        btn.style.setProperty("--mx", ((e.clientX - r.left) / r.width) * 100 + "%");
+        btn.style.setProperty("--my", ((e.clientY - r.top) / r.height) * 100 + "%");
       });
-      btn.addEventListener("mouseenter", () => { targetR = "60%"; queue(); });
-      btn.addEventListener("mouseleave", () => { targetR = "0%"; queue(); });
     });
   }
 
