@@ -267,6 +267,16 @@ ul { list-style: none; }
   color: var(--text);
   border-color: var(--text-dim);
 }
+.hero__tags a.is-featured {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+.hero__tags a.is-featured:hover {
+  background: var(--accent-2);
+  border-color: var(--accent-2);
+}
 .hero__scroll {
   position: absolute;
   right: 28px; bottom: 7vh;
@@ -332,6 +342,7 @@ ul { list-style: none; }
 }
 .filter:hover { color: var(--text); border-color: var(--text-faint); }
 .filter.active { color: #fff; background: var(--accent); border-color: var(--accent); }
+.filter.is-featured:not(.active) { color: var(--accent-2); border-color: var(--accent); font-weight: 600; }
 
 .grid {
   display: grid;
