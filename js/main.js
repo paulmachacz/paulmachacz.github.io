@@ -185,6 +185,41 @@
   const frameSide = document.querySelector(".hero__frame--side");
   const heroScroll = document.querySelector(".hero__scroll");
 
+  /* ---------- Carte 3D : inclinaison des images du hero au survol ---------- */
+  function makeTilt(el) {
+    if (!el) return { setBaseY() {} };
+    let baseY = 0, rotX = 0, rotY = 0, raf = null;
+
+    const render = () => {
+      el.style.transform =
+        "translateY(" + baseY + "px) rotateX(" + rotX + "deg) rotateY(" + rotY + "deg)";
+      raf = null;
+    };
+    const queue = () => { if (!raf) raf = window.requestAnimationFrame(render); };
+
+    if (!prefersReduced) {
+      el.addEventListener("mousemove", (e) => {
+        const r = el.getBoundingClientRect();
+        // Formule proche du composant Aceternity "3D Card Effect" :
+        // décalage en pixels par rapport au centre, divisé par 25.
+        rotY = (e.clientX - r.left - r.width / 2) / 25;
+        rotX = -(e.clientY - r.top - r.height / 2) / 25;
+        el.style.setProperty("--mx", ((e.clientX - r.left) / r.width) * 100 + "%");
+        el.style.setProperty("--my", ((e.clientY - r.top) / r.height) * 100 + "%");
+        queue();
+      });
+      el.addEventListener("mouseleave", () => {
+        rotX = 0; rotY = 0;
+        queue();
+      });
+    }
+
+    return { setBaseY(y) { baseY = y; queue(); } };
+  }
+
+  const tiltMain = makeTilt(frameMain);
+  const tiltSide = makeTilt(frameSide);
+
   if (hero && !prefersReduced) {
     let ticking = false;
 
@@ -202,8 +237,8 @@
       if (heroScroll) heroScroll.style.opacity = String(Math.max(0, 1 - p * 3));
 
       // Images : vitesses différentes pour un effet de profondeur
-      if (frameMain) frameMain.style.transform = "translateY(" + y * -0.07 + "px)";
-      if (frameSide) frameSide.style.transform = "translateY(" + y * 0.06 + "px)";
+      tiltMain.setBaseY(y * -0.07);
+      tiltSide.setBaseY(y * 0.06);
 
       ticking = false;
     };
@@ -216,6 +251,9 @@
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     update();
+  } else {
+    tiltMain.setBaseY(0);
+    tiltSide.setBaseY(0);
   }
 
   /* ---------- Année dynamique dans le pied de page ---------- */
