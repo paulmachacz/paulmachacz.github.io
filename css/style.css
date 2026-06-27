@@ -202,22 +202,6 @@ ul { list-style: none; }
 }
 .hero__frame:hover img { transform: scale(1.08) translateZ(40px); }
 
-/* Reflet lumineux qui suit la souris (effet carte 3D) */
-.hero__frame::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.4s var(--ease);
-  background: radial-gradient(
-    circle at var(--mx, 50%) var(--my, 50%),
-    rgba(255,255,255,0.18),
-    transparent 55%
-  );
-}
-.hero__frame:hover::before { opacity: 1; }
 .hero__frame.is-empty::after {
   content: attr(data-label);
   position: absolute; inset: 0;
