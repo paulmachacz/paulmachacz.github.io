@@ -56,6 +56,9 @@
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(buildGrid, 200);
     });
+
+    // Onde de démonstration automatique au chargement, pour montrer l'effet
+    setTimeout(() => ripple(Math.floor(rows / 2), Math.floor(cols / 2)), 700);
   }
 
   /* ---------- Navigation : état au scroll + menu mobile ---------- */
