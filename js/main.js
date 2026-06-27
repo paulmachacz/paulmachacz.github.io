@@ -4,63 +4,6 @@
 (function () {
   "use strict";
 
-  /* ---------- Fond interactif du hero : grille avec effet d'onde au clic ---------- */
-  const rippleGrid = document.querySelector("[data-ripple]");
-  if (rippleGrid) {
-    const CELL = 64; // taille d'une cellule en pixels
-    let cells = [];
-    let cols = 0, rows = 0;
-
-    function buildGrid() {
-      const w = rippleGrid.clientWidth;
-      const h = rippleGrid.clientHeight;
-      cols = Math.ceil(w / CELL);
-      rows = Math.ceil(h / CELL);
-      rippleGrid.style.gridTemplateColumns = "repeat(" + cols + ", " + CELL + "px)";
-      rippleGrid.style.gridTemplateRows = "repeat(" + rows + ", " + CELL + "px)";
-
-      rippleGrid.innerHTML = "";
-      cells = [];
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          const cell = document.createElement("div");
-          cell.className = "hero__cell";
-          cell.dataset.row = r;
-          cell.dataset.col = c;
-          rippleGrid.appendChild(cell);
-          cells.push(cell);
-        }
-      }
-    }
-
-    function ripple(originRow, originCol) {
-      cells.forEach((cell) => {
-        const dr = Number(cell.dataset.row) - originRow;
-        const dc = Number(cell.dataset.col) - originCol;
-        const dist = Math.sqrt(dr * dr + dc * dc);
-        setTimeout(() => {
-          cell.classList.add("is-rippling");
-          setTimeout(() => cell.classList.remove("is-rippling"), 350);
-        }, dist * 45);
-      });
-    }
-
-    rippleGrid.addEventListener("click", (e) => {
-      const cell = e.target.closest(".hero__cell");
-      if (cell) ripple(Number(cell.dataset.row), Number(cell.dataset.col));
-    });
-
-    buildGrid();
-    let resizeTimer = null;
-    window.addEventListener("resize", () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(buildGrid, 200);
-    });
-
-    // Onde de démonstration automatique au chargement, pour montrer l'effet
-    setTimeout(() => ripple(Math.floor(rows / 2), Math.floor(cols / 2)), 700);
-  }
-
   /* ---------- Navigation : état au scroll + menu mobile ---------- */
   const nav = document.querySelector(".nav");
   const toggle = document.querySelector(".nav__toggle");
