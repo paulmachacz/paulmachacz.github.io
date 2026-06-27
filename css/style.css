@@ -223,13 +223,23 @@ ul { list-style: none; }
 }
 .hero__grid {
   position: absolute; inset: 0;
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 64px 64px;
+  display: grid;
   mask-image: radial-gradient(80% 80% at 50% 40%, #000 0%, transparent 75%);
   z-index: -1;
   opacity: 0.5;
+}
+.hero__cell {
+  border: 1px solid var(--border);
+  background: transparent;
+  transition: background 0.4s ease;
+}
+.hero__cell:hover {
+  background: rgba(122,138,63,0.25);
+  transition: background 0.05s ease;
+}
+.hero__cell.is-rippling {
+  background: rgba(122,138,63,0.45);
+  transition: background 0.05s ease;
 }
 /* Fondu du bas du hero vers la section suivante : casse la ligne nette */
 .hero::after {
