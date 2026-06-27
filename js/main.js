@@ -244,8 +244,10 @@
           img.alt = "";
           img.draggable = false;
 
+          const isEdge = row === 0 || col === 0 || row === rows - 1 || col === cols - 1;
+
           piece.appendChild(img);
-          pieces.push({ piece, img });
+          pieces.push({ piece, img, isEdge });
           frag.appendChild(piece);
         }
 
@@ -263,9 +265,10 @@
         });
         void pieces[0].piece.offsetHeight; // force le rendu de l'état réinitialisé
 
-        pieces.forEach(({ piece }) => {
+        pieces.forEach(({ piece, isEdge }) => {
           piece.style.transitionDuration = (skipAnimation ? 0 : pixelFadeInDuration) + "ms";
-          piece.style.transitionDelay = (skipAnimation ? 0 : Math.random() * maxAnimationDelay) + "ms";
+          // Les pièces du contour apparaissent en premier pour ne jamais laisser voir le cadre du fond
+          piece.style.transitionDelay = (skipAnimation ? 0 : isEdge ? Math.random() * 150 : Math.random() * maxAnimationDelay) + "ms";
         });
 
         requestAnimationFrame(() => {
