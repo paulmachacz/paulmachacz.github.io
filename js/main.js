@@ -196,13 +196,108 @@
     });
   }
 
+  /* ---------- Révélation en pixels (image du hero, effet "PixelImage") ---------- */
+  function initPixelImages(skipAnimation) {
+    document.querySelectorAll("[data-pixel-src]").forEach((container) => {
+      const src = container.dataset.pixelSrc;
+      const rows = parseInt(container.dataset.pixelRows || "4", 10);
+      const cols = parseInt(container.dataset.pixelCols || "6", 10);
+      const frame = container.closest(".hero__frame");
+      const pixelFadeInDuration = 1000; // ms
+      const maxAnimationDelay = 1200; // ms
+      const colorRevealDelay = 1300; // ms
+
+      const holdDuration = 2500; // ms — temps où la photo reste pleinement visible avant de se réinitialiser
+      const loop = !skipAnimation; // une seule apparition si l'utilisateur préfère moins d'animations
+
+      const probe = new Image();
+      probe.onload = () => {
+        if (frame) frame.classList.remove("is-empty");
+        playCycle(buildPieces());
+      };
+      probe.onerror = () => {
+        if (frame) frame.classList.add("is-empty");
+      };
+      probe.src = src;
+
+      function buildPieces() {
+        const total = rows * cols;
+        const frag = document.createDocumentFragment();
+        const pieces = [];
+
+        for (let index = 0; index < total; index++) {
+          const row = Math.floor(index / cols);
+          const col = index % cols;
+
+          const piece = document.createElement("div");
+          piece.className = "pixel-piece";
+          piece.style.clipPath =
+            "polygon(" +
+            (col * (100 / cols)) + "% " + (row * (100 / rows)) + "%, " +
+            ((col + 1) * (100 / cols)) + "% " + (row * (100 / rows)) + "%, " +
+            ((col + 1) * (100 / cols)) + "% " + ((row + 1) * (100 / rows)) + "%, " +
+            (col * (100 / cols)) + "% " + ((row + 1) * (100 / rows)) + "%)";
+
+          const img = document.createElement("img");
+          img.className = "pixel-piece__img";
+          img.src = src;
+          img.alt = "";
+          img.draggable = false;
+
+          piece.appendChild(img);
+          pieces.push({ piece, img });
+          frag.appendChild(piece);
+        }
+
+        container.appendChild(frag);
+        return pieces;
+      }
+
+      function playCycle(pieces) {
+        // Réinitialisation instantanée (sans transition) avant chaque répétition
+        pieces.forEach(({ piece, img }) => {
+          piece.style.transitionDuration = "0ms";
+          piece.style.transitionDelay = "0ms";
+          piece.classList.remove("is-visible");
+          img.classList.remove("is-color");
+        });
+        void pieces[0].piece.offsetHeight; // force le rendu de l'état réinitialisé
+
+        pieces.forEach(({ piece }) => {
+          piece.style.transitionDuration = (skipAnimation ? 0 : pixelFadeInDuration) + "ms";
+          piece.style.transitionDelay = (skipAnimation ? 0 : Math.random() * maxAnimationDelay) + "ms";
+        });
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            pieces.forEach(({ piece }) => piece.classList.add("is-visible"));
+          });
+        });
+
+        setTimeout(() => {
+          pieces.forEach(({ img }) => img.classList.add("is-color"));
+        }, skipAnimation ? 0 : colorRevealDelay);
+
+        if (loop) {
+          setTimeout(
+            () => playCycle(pieces),
+            colorRevealDelay + pixelFadeInDuration + holdDuration
+          );
+        }
+      }
+    });
+  }
+
   /* ---------- Parallaxe + fondu du hero au défilement ---------- */
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const hero = document.querySelector(".hero");
   const heroText = document.querySelector(".hero__text");
   const frameMain = document.querySelector(".hero__frame--main");
   const frameSide = document.querySelector(".hero__frame--side");
+  const frameThird = document.querySelector(".hero__frame--third");
   const heroScroll = document.querySelector(".hero__scroll");
+
+  initPixelImages(prefersReduced);
 
   /* ---------- Carte 3D : inclinaison des images du hero au survol ---------- */
   function makeTilt(el) {
@@ -238,6 +333,7 @@
 
   const tiltMain = makeTilt(frameMain);
   const tiltSide = makeTilt(frameSide);
+  const tiltThird = makeTilt(frameThird);
 
   if (hero && !prefersReduced) {
     let ticking = false;
@@ -258,6 +354,7 @@
       // Images : vitesses différentes pour un effet de profondeur
       tiltMain.setBaseY(y * -0.07);
       tiltSide.setBaseY(y * 0.06);
+      tiltThird.setBaseY(y * 0.05);
 
       ticking = false;
     };
@@ -273,6 +370,7 @@
   } else {
     tiltMain.setBaseY(0);
     tiltSide.setBaseY(0);
+    tiltThird.setBaseY(0);
   }
 
   /* ---------- Année dynamique dans le pied de page ---------- */
