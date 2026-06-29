@@ -43,6 +43,16 @@
     const limit = parseInt(grid.dataset.limit || "0", 10);
     const list = limit > 0 ? PHOTOS.slice(0, limit) : PHOTOS;
 
+    // Largeur affichée (en CSS px) de chaque forme de tuile selon la largeur
+    // de fenêtre — sert à indiquer au navigateur quelle résolution choisir
+    // dans le srcset (miniature nette sans télécharger plus gros que nécessaire).
+    const TILE_SIZES = {
+      wide: "(max-width: 860px) 50vw, (max-width: 1376px) 67vw, 837px",
+      big:  "(max-width: 860px) 50vw, (max-width: 1376px) 50vw, 624px",
+      tall: "(max-width: 860px) 50vw, (max-width: 1376px) 33vw, 410px",
+      "":   "(max-width: 860px) 50vw, (max-width: 1376px) 33vw, 410px",
+    };
+
     list.forEach((p) => {
       const tile = document.createElement("article");
       tile.className = "tile" + (p.size ? " tile--" + p.size : "");
@@ -55,8 +65,13 @@
       // Image avec repli élégant si le fichier n'existe pas encore
       const img = document.createElement("img");
       img.loading = "lazy";
+      img.decoding = "async";
       img.alt = p.title + " — " + label;
-      img.src = "images/thumbs/" + p.file;
+      const thumbSrc = "images/thumbs/" + p.file;
+      const thumbSrc2x = thumbSrc.replace(/\.jpg$/i, "@2x.jpg");
+      img.src = thumbSrc;
+      img.srcset = thumbSrc + " 800w, " + thumbSrc2x + " 1920w";
+      img.sizes = TILE_SIZES[p.size || ""] || TILE_SIZES[""];
       img.addEventListener("error", () => {
         img.remove();
         const ph = document.createElement("div");
@@ -225,18 +240,28 @@
         const frag = document.createDocumentFragment();
         const pieces = [];
 
+        // Léger débord sur les arêtes internes pour éviter les liserés
+        // d'anticrénelage entre cases visibles sur les grands écrans.
+        const overlap = 0.6;
+        const clampPct = (value) => Math.min(100, Math.max(0, value));
+
         for (let index = 0; index < total; index++) {
           const row = Math.floor(index / cols);
           const col = index % cols;
+
+          const left = clampPct(col * (100 / cols) - (col > 0 ? overlap : 0));
+          const right = clampPct(((col + 1) * (100 / cols)) + (col < cols - 1 ? overlap : 0));
+          const top = clampPct(row * (100 / rows) - (row > 0 ? overlap : 0));
+          const bottom = clampPct(((row + 1) * (100 / rows)) + (row < rows - 1 ? overlap : 0));
 
           const piece = document.createElement("div");
           piece.className = "pixel-piece";
           piece.style.clipPath =
             "polygon(" +
-            (col * (100 / cols)) + "% " + (row * (100 / rows)) + "%, " +
-            ((col + 1) * (100 / cols)) + "% " + (row * (100 / rows)) + "%, " +
-            ((col + 1) * (100 / cols)) + "% " + ((row + 1) * (100 / rows)) + "%, " +
-            (col * (100 / cols)) + "% " + ((row + 1) * (100 / rows)) + "%)";
+            left + "% " + top + "%, " +
+            right + "% " + top + "%, " +
+            right + "% " + bottom + "%, " +
+            left + "% " + bottom + "%)";
 
           const img = document.createElement("img");
           img.className = "pixel-piece__img";

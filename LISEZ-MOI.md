@@ -27,9 +27,13 @@ Lightroom avant de les mettre sur le web.
    - Format : **JPEG**, qualité **80**
    - Taille : limiter le bord long à **~2000 px**
    - (cela garde un site rapide à charger)
-3. Placez les JPG exportés dans le dossier **`images/`**.
+3. Placez les JPG exportés dans le dossier **`images/<categorie>/`**.
 4. Ouvrez **`js/data.js`** et indiquez, pour chaque photo :
    - le **nom du fichier**, son **titre**, sa **catégorie**, et la forme de la tuile.
+5. Lancez **`tools/generer-miniatures.ps1`** (clic droit ▸ Exécuter avec PowerShell).
+   Il crée automatiquement les miniatures dans `images/thumbs/` (deux tailles par
+   photo, pour un rendu net même sur grand écran sans alourdir le chargement).
+   À refaire chaque fois que vous ajoutez ou remplacez des photos.
 
 Tant qu'une image n'est pas présente, une tuile décorative s'affiche à sa place —
 le site reste donc présentable même incomplet.
