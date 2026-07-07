@@ -111,6 +111,8 @@
     const filters = document.querySelectorAll("[data-filter]");
     if (!filters.length) return;
 
+    const armeeBanner = document.querySelector("[data-armee-banner]");
+
     function applyFilter(cat) {
       filters.forEach((b) => b.classList.remove("active"));
       const active = [...filters].find((b) => b.dataset.filter === cat) || filters[0];
@@ -120,6 +122,7 @@
         const show = activeCat === "all" || tile.dataset.category === activeCat;
         tile.classList.toggle("hide", !show);
       });
+      if (armeeBanner) armeeBanner.classList.toggle("is-visible", activeCat === "armee");
     }
 
     filters.forEach((btn) => {

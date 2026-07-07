@@ -40,6 +40,11 @@ const PHOTOS = [
   { file: "vehicule/vehicule-face-avant.jpg",     title: "Face avant",               category: "vehicule",  size: "tall" },
   { file: "vehicule/vehicule-atelier-rouge.jpg",  title: "À l'atelier",              category: "vehicule",  size: "tall" },
   { file: "vehicule/vehicule-showroom-nb.jpg",    title: "Showroom, noir et blanc",  category: "vehicule",  size: "tall" },
+  { file: "armee/armee-approche.jpg",             title: "Approche silencieuse",     category: "armee",     size: "tall" },
+  { file: "armee/armee-position-tir.jpg",         title: "Position de tir",          category: "armee",     size: "big"  },
+  { file: "armee/armee-optique.jpg",              title: "Optique activée",          category: "armee",     size: ""     },
+  { file: "armee/armee-contre-jour.jpg",          title: "Camouflage à contre-jour", category: "armee",     size: "tall" },
+  { file: "armee/armee-sous-couvert.jpg",         title: "Sous couvert végétal",     category: "armee",     size: ""     },
 ];
 
 /* Libellés affichés des catégories (filtres et légendes) */
