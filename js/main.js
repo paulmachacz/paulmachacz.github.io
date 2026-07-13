@@ -50,6 +50,7 @@
       wide: "(max-width: 860px) 50vw, (max-width: 1376px) 67vw, 837px",
       big:  "(max-width: 860px) 50vw, (max-width: 1376px) 50vw, 624px",
       tall: "(max-width: 860px) 50vw, (max-width: 1376px) 33vw, 410px",
+      medium: "(max-width: 860px) 50vw, (max-width: 1376px) 50vw, 624px",
       "":   "(max-width: 860px) 50vw, (max-width: 1376px) 33vw, 410px",
     };
 
