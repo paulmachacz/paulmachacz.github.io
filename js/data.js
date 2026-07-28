@@ -31,7 +31,6 @@ const PHOTOS = [
   { file: "vehicule/vehicule-face-avant.jpg",     title: "Face avant",               category: "vehicule",  size: "tall" },
   { file: "vehicule/vehicule-atelier-rouge.jpg",  title: "À l'atelier",              category: "vehicule",  size: "tall" },
   { file: "vehicule/vehicule-kart-virage.jpg",      title: "Sortie de virage, kart 427", category: "vehicule", size: "tall" },
-  { file: "vehicule/vehicule-kart-file-foret.jpg",  title: "Filé sous les arbres",       category: "vehicule", size: "wide" },
   { file: "vehicule/vehicule-kart-dream-racing.jpg",title: "Kart Dream Racing en pleine action", category: "vehicule", size: "" },
 
   /* --- Armée : déjà ajustée (3 tall + big/medium/big/medium + 2 wide/tall) = grille pleine --- */
