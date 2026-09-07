@@ -34,15 +34,25 @@ const PHOTOS = [
   { file: "vehicule/vehicule-kart-dream-racing.jpg",title: "Kart Dream Racing en pleine action", category: "vehicule", size: "" },
 
   /* --- Armée : déjà ajustée (3 tall + big/medium/big/medium + 2 wide/tall) = grille pleine --- */
-  { file: "armee/armee-munitions.jpg",            title: "Chargeur prêt",            category: "armee",     size: "tall" },
   { file: "armee/armee-vtt.jpg",                  title: "Patrouille en Sur-Ron",    category: "armee",     size: "tall" },
-  { file: "armee/armee-approche.jpg",             title: "Approche silencieuse",     category: "armee",     size: "tall" },
-  { file: "armee/armee-position-tir.jpg",         title: "Position de tir",          category: "armee",     size: "big"  },
   { file: "armee/armee-optique.jpg",              title: "Optique activée",          category: "armee",     size: "medium" },
   { file: "armee/armee-contre-jour.jpg",          title: "Camouflage à contre-jour", category: "armee",     size: "big"  },
   { file: "armee/armee-affut.jpg",                title: "À l'affût",                category: "armee",     size: "wide" },
   { file: "armee/armee-embuscade.jpg",            title: "En embuscade",             category: "armee",     size: "wide" },
-  { file: "armee/armee-feuillage.jpg",            title: "Fondu dans le feuillage",  category: "armee",     size: "tall" },
+  { file: "armee/armee-trousse-medicale.jpg",     title: "Trousse médicale de combat", category: "armee",   size: "tall" },
+  { file: "armee/armee-perfusion.jpg",            title: "Soins d'urgence",          category: "armee",     size: "big"  },
+  { file: "armee/armee-embrasure.jpg",            title: "Dans l'embrasure",         category: "armee",     size: "tall" },
+  { file: "armee/armee-en-joue.jpg",               title: "En joue",                  category: "armee",     size: "tall" },
+  { file: "armee/armee-reglage-casque.jpg",       title: "Ajustement de l'équipement", category: "armee",   size: "wide" },
+  { file: "armee/armee-vision-nocturne.jpg",      title: "Tir en vision nocturne",   category: "armee",     size: "wide" },
+  { file: "armee/armee-kfc.jpg",                  title: "Pause KFC",                category: "armee",     size: "tall" },
+  { file: "armee/armee-nuit-etoilee.jpg",         title: "Veille sous la Voie lactée", category: "armee",   size: "medium" },
+  { file: "armee/armee-cage-escalier.jpg",        title: "Progression en cage d'escalier", category: "armee", size: "medium" },
+  { file: "armee/armee-secours-combat.jpg",       title: "Secours au combat",        category: "armee",     size: "big"  },
+  { file: "armee/armee-colonne-couloir.jpg",      title: "Colonne d'assaut",         category: "armee",     size: "wide" },
+  { file: "armee/armee-assaut-fumee.jpg",         title: "Assaut sous fumée",        category: "armee",     size: "medium" },
+  { file: "armee/armee-ram-tireur.jpg",           title: "RAM, poste de tir",        category: "armee",     size: "wide" },
+  { file: "armee/armee-ram-crepuscule.jpg",       title: "RAM au crépuscule",        category: "armee",     size: "medium" },
 ];
 
 /* Libellés affichés des catégories (filtres et légendes) */
