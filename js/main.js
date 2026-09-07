@@ -160,6 +160,26 @@
     let current = 0;
     let visible = [];
 
+    // En plein écran on affiche le fichier 1920 px (quelques centaines de Ko)
+    // et non l'original (10 à 25 Mo) : indiscernable à l'écran, mais immédiat.
+    function largeSrc(file) {
+      return "images/thumbs/" + file.replace(/\.jpg$/i, "@2x.jpg");
+    }
+
+    // Les grandes versions déjà demandées restent en mémoire, ce qui rend les
+    // allers-retours entre photos instantanés.
+    const large = new Map();
+    function preload(file) {
+      if (!file) return null;
+      let im = large.get(file);
+      if (!im) {
+        im = new Image();
+        im.src = largeSrc(file);
+        large.set(file, im);
+      }
+      return im;
+    }
+
     function render() {
       const t = visible[current];
       if (!t) return;
@@ -171,7 +191,6 @@
 
       const img = new Image();
       img.alt = title;
-      img.src = "images/" + file;
       img.addEventListener("error", () => {
         stage.innerHTML = "";
         const ph = document.createElement("div");
@@ -179,8 +198,44 @@
         ph.textContent = label;
         stage.appendChild(ph);
       });
+
+      // La miniature de la tuile est déjà en cache : on l'affiche tout de suite,
+      // légèrement floutée, le temps que la grande version arrive.
+      const tileImg = t.querySelector("img");
+      const preview = tileImg && (tileImg.currentSrc || tileImg.src);
+      if (preview) {
+        img.src = preview;
+        img.classList.add("is-preview");
+      }
+
+      const full = preload(file);
+      const showFull = () => {
+        img.src = full.src;
+        img.classList.remove("is-preview");
+      };
+      const showOriginal = () => {
+        img.src = "images/" + file;
+        img.classList.remove("is-preview");
+      };
+      if (full.complete) {
+        // Déjà chargée (ou en échec) : on tranche sans attendre.
+        full.naturalWidth ? showFull() : showOriginal();
+      } else {
+        full.addEventListener("load", showFull, { once: true });
+        full.addEventListener("error", showOriginal, { once: true });
+        if (!preview) img.src = full.src;
+      }
+
       stage.appendChild(img);
       caption.textContent = title + " · " + label;
+
+      // Photos suivante et précédente préchargées : les flèches répondent
+      // sans temps d'attente.
+      const n = visible.length;
+      if (n > 1) {
+        preload(visible[(current + 1) % n].dataset.file);
+        preload(visible[(current - 1 + n) % n].dataset.file);
+      }
     }
 
     function open(tile) {
