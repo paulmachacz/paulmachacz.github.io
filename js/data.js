@@ -50,7 +50,6 @@ const PHOTOS = [
   { file: "armee/armee-cage-escalier.jpg",        title: "Progression en cage d'escalier", category: "armee", size: "medium" },
   { file: "armee/armee-secours-combat.jpg",       title: "Secours au combat",        category: "armee",     size: "big"  },
   { file: "armee/armee-colonne-couloir.jpg",      title: "Colonne d'assaut",         category: "armee",     size: "wide" },
-  { file: "armee/armee-assaut-fumee.jpg",         title: "Assaut sous fumée",        category: "armee",     size: "medium" },
   { file: "armee/armee-ram-tireur.jpg",           title: "RAM, poste de tir",        category: "armee",     size: "wide" },
   { file: "armee/armee-ram-crepuscule.jpg",       title: "RAM au crépuscule",        category: "armee",     size: "medium" },
 ];
