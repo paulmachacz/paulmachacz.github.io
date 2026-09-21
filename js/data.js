@@ -7,8 +7,10 @@
                 (organisé par sous-dossier de catégorie)
      title    : titre affiché au survol et en plein écran
      category : une des catégories ci-dessous (en minuscules)
-     size     : forme de la tuile -> "" | "wide" | "tall" | "big"
-                (laisser "" pour une tuile standard)
+     size     : forme de la tuile -> "" | "wide" | "tall" | "big" | "medium"
+                (laisser "" pour une tuile standard). C'est une préférence :
+                la galerie ajuste d'elle-même quelques tuiles pour ne jamais
+                laisser de case vide, quel que soit le filtre ou l'écran.
 
    Catégories disponibles :
      animalier · vehicule · armee · post-traitement
@@ -18,7 +20,7 @@
    ========================================================= */
 
 const PHOTOS = [
-  /* --- Véhicule : 1 ligne (wide+normal) + 4 bandes de 3 tuiles tall = grille pleine, sans trou --- */
+  /* --- Véhicule --- */
   { file: "vehicule/vehicule-aileron.jpg",        title: "GT3 RS, vue arrière",      category: "vehicule",  size: "wide" },
   { file: "vehicule/vehicule-montelimar.jpg",     title: "Centre Porsche Montélimar",category: "vehicule",  size: ""     },
   { file: "vehicule/vehicule-volant.jpg",         title: "Poste de pilotage",        category: "vehicule",  size: "tall" },
@@ -33,7 +35,7 @@ const PHOTOS = [
   { file: "vehicule/vehicule-kart-virage.jpg",      title: "Sortie de virage, kart 427", category: "vehicule", size: "tall" },
   { file: "vehicule/vehicule-kart-dream-racing.jpg",title: "Kart Dream Racing en pleine action", category: "vehicule", size: "" },
 
-  /* --- Armée : déjà ajustée (3 tall + big/medium/big/medium + 2 wide/tall) = grille pleine --- */
+  /* --- Armée --- */
   { file: "armee/armee-vtt.jpg",                  title: "Patrouille en Sur-Ron",    category: "armee",     size: "tall" },
   { file: "armee/armee-optique.jpg",              title: "Optique activée",          category: "armee",     size: "medium" },
   { file: "armee/armee-contre-jour.jpg",          title: "Camouflage à contre-jour", category: "armee",     size: "big"  },

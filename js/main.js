@@ -103,8 +103,179 @@
     );
     grid.querySelectorAll(".tile").forEach((t) => tileObserver.observe(t));
 
+    packGrid(grid);
+    // Les tailles de tuiles changent aux points de rupture : on replace tout.
+    ["(max-width: 860px)", "(max-width: 540px)"].forEach((q) =>
+      window.matchMedia(q).addEventListener("change", () => packGrid(grid))
+    );
+
     initFilters(grid);
     initLightbox(grid);
+  }
+
+  /* ---------- Grille sans trous ----------
+     Les tuiles de 6 colonnes (medium, big) laissent des bandes vides à côté
+     des tuiles de 4 ou 8 colonnes, et la disposition change avec le filtre
+     et la largeur d'écran. On place donc les tuiles nous-mêmes, avec la même
+     règle que le navigateur (« dense » : première place libre en lisant ligne
+     par ligne), puis chaque case restée vide est absorbée par une tuile
+     voisine qui s'élargit ou s'allonge. Si des cases résistent, on essaie
+     d'autres formes pour certaines tuiles et on garde la disposition sans
+     trou qui s'écarte le moins des formes choisies dans data.js. */
+  function packGrid(grid) {
+    const TILE_SHAPES = ["", "wide", "tall", "big", "medium"];
+    grid.querySelectorAll(".tile").forEach((t) => {
+      t.style.gridColumn = "";
+      t.style.gridRow = "";
+    });
+    const tiles = [...grid.querySelectorAll(".tile:not(.hide)")];
+    if (!tiles.length) return;
+
+    const gcs = getComputedStyle(grid);
+    const cols = gcs.gridTemplateColumns.split(" ").length;
+    const gap = parseFloat(gcs.columnGap) || 0;
+    const colW = (grid.clientWidth - gap * (cols - 1)) / cols;
+    const rowH = parseFloat(gcs.gridAutoRows) || parseFloat(gcs.gridTemplateRows) || colW;
+    const span = (v) => {
+      const m = /span (\d+)/.exec(v);
+      return m ? +m[1] : 1;
+    };
+
+    // Dimensions (en cases) de chaque forme au point de rupture actuel,
+    // lues dans la feuille de style pour qu'elle reste la seule référence.
+    const probe = document.createElement("article");
+    grid.appendChild(probe);
+    const shapeOf = {};
+    TILE_SHAPES.forEach((s) => {
+      probe.className = "tile hide" + (s ? " tile--" + s : "");
+      const cs = getComputedStyle(probe);
+      shapeOf[s] = { w: Math.min(span(cs.gridColumnStart), cols), h: span(cs.gridRowStart) };
+    });
+    probe.remove();
+
+    const ratio = (w, h) => (w * colW + (w - 1) * gap) / (h * rowH + (h - 1) * gap);
+    const pref = tiles.map((t) => (t.className.match(/tile--(\w+)/) || [])[1] || "");
+    const target = pref.map((s) => ratio(shapeOf[s].w, shapeOf[s].h));
+
+    // Coût d'une disposition : chaque case vide pèse très lourd, puis on
+    // additionne l'écart de proportions de chaque tuile avec sa forme voulue.
+    const evaluate = (sizes) => {
+      const res = packShapes(sizes.map((s) => shapeOf[s]), cols);
+      let drift = 0;
+      res.boxes.forEach((b, i) => {
+        drift += Math.abs(Math.log(ratio(b.c1 - b.c0, b.r1 - b.r0) / target[i]));
+      });
+      res.cost = res.holes * 1000 + drift;
+      return res;
+    };
+
+    let sizes = pref;
+    let best = evaluate(sizes);
+    for (let pass = 0; pass < 6 && best.cost > 1e-6; pass++) {
+      let improved = false;
+      for (let i = 0; i < sizes.length; i++) {
+        for (const s of TILE_SHAPES) {
+          if (s === sizes[i]) continue;
+          const trial = sizes.slice();
+          trial[i] = s;
+          const res = evaluate(trial);
+          if (res.cost < best.cost - 1e-6) {
+            best = res;
+            sizes = trial;
+            improved = true;
+          }
+        }
+      }
+      if (!improved) break;
+    }
+
+    tiles.forEach((t, i) => {
+      const b = best.boxes[i];
+      t.style.gridColumn = b.c0 + 1 + " / " + (b.c1 + 1);
+      t.style.gridRow = b.r0 + 1 + " / " + (b.r1 + 1);
+    });
+    // Une tuile agrandie doit charger une miniature assez grande
+    tiles.forEach((t) => {
+      const img = t.querySelector("img");
+      if (img && t.offsetWidth) img.sizes = t.offsetWidth + "px";
+    });
+  }
+
+  // shapes[i] = { w, h } en cases ; renvoie la position de chaque tuile et le
+  // nombre de cases restées vides.
+  function packShapes(shapes, cols) {
+    const occ = []; // occ[ligne][colonne] = index de la tuile qui l'occupe
+    const at = (r, c) => (occ[r] || [])[c];
+    const claim = (b, i) => {
+      for (let r = b.r0; r < b.r1; r++)
+        for (let c = b.c0; c < b.c1; c++) (occ[r] = occ[r] || [])[c] = i;
+    };
+    const free = (r0, r1, c0, c1) => {
+      for (let r = r0; r < r1; r++)
+        for (let c = c0; c < c1; c++) if (at(r, c) !== undefined) return false;
+      return true;
+    };
+
+    const full = (r) => {
+      for (let c = 0; c < cols; c++) if (at(r, c) === undefined) return false;
+      return true;
+    };
+
+    let top = 0; // les lignes au-dessus sont pleines : inutile d'y chercher
+    const boxes = shapes.map(({ w, h }, i) => {
+      for (let r = top; ; r++) {
+        for (let c = 0; c + w <= cols; c++) {
+          if (free(r, r + h, c, c + w)) {
+            const b = { r0: r, r1: r + h, c0: c, c1: c + w };
+            claim(b, i);
+            while (full(top)) top++;
+            return b;
+          }
+        }
+      }
+    });
+    const rows = Math.max(...boxes.map((b) => b.r1));
+
+    // Agrandit la tuile i d'autant de colonnes/lignes vides que possible dans
+    // une direction ; renvoie vrai si elle a grandi.
+    function grow(i, dir) {
+      if (i === undefined) return false;
+      const b = boxes[i];
+      let n = 0;
+      if (dir === "right") while (b.c1 + n < cols && free(b.r0, b.r1, b.c1 + n, b.c1 + n + 1)) n++;
+      if (dir === "left") while (b.c0 - n > 0 && free(b.r0, b.r1, b.c0 - n - 1, b.c0 - n)) n++;
+      if (dir === "down") while (b.r1 + n < rows && free(b.r1 + n, b.r1 + n + 1, b.c0, b.c1)) n++;
+      if (dir === "up") while (b.r0 - n > 0 && free(b.r0 - n - 1, b.r0 - n, b.c0, b.c1)) n++;
+      if (!n) return false;
+      if (dir === "right") b.c1 += n;
+      if (dir === "left") b.c0 -= n;
+      if (dir === "down") b.r1 += n;
+      if (dir === "up") b.r0 -= n;
+      claim(b, i);
+      return true;
+    }
+
+    let changed = true;
+    while (changed) {
+      changed = false;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          if (at(r, c) !== undefined) continue;
+          let right;
+          for (let cc = c + 1; cc < cols && right === undefined; cc++) right = at(r, cc);
+          if (
+            grow(at(r, c - 1), "right") ||
+            grow(right, "left") ||
+            grow(at(r - 1, c), "down") ||
+            grow(at(r + 1, c), "up")
+          ) changed = true;
+        }
+      }
+    }
+
+    let holes = 0;
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) if (at(r, c) === undefined) holes++;
+    return { boxes, holes };
   }
 
   /* ---------- Filtres par catégorie ---------- */
@@ -123,6 +294,7 @@
         const show = activeCat === "all" || tile.dataset.category === activeCat;
         tile.classList.toggle("hide", !show);
       });
+      packGrid(grid);
       if (armeeBanner) armeeBanner.classList.toggle("is-visible", activeCat === "armee");
     }
 
