@@ -52,6 +52,11 @@ const PHOTOS = [
   { file: "armee/armee-colonne-couloir.jpg",      title: "Colonne d'assaut",         category: "armee",     size: "wide" },
   { file: "armee/armee-ram-tireur.jpg",           title: "RAM, poste de tir",        category: "armee",     size: "wide" },
   { file: "armee/armee-ram-crepuscule.jpg",       title: "RAM au crépuscule",        category: "armee",     size: "medium" },
+  { file: "armee/armee-patrouille-utv.jpg",       title: "Patrouille en tout-terrain", category: "armee",   size: "wide" },
+  { file: "armee/armee-ghillie-polaris.jpg",      title: "Ghillie sous les pins",    category: "armee",     size: "tall" },
+  { file: "armee/armee-tir-polaris.jpg",          title: "Tir depuis le Polaris",    category: "armee",     size: "medium" },
+  { file: "armee/armee-parking-neon.jpg",         title: "Sous le néon",             category: "armee",     size: "tall" },
+  { file: "armee/armee-cowboy-couchant.jpg",      title: "Cow-boy au couchant",      category: "armee",     size: "wide" },
 ];
 
 /* Libellés affichés des catégories (filtres et légendes) */
