@@ -59,6 +59,7 @@ const PHOTOS = [
   { file: "armee/armee-tir-polaris.jpg",          title: "Tir depuis le Polaris",    category: "armee",     size: "medium" },
   { file: "armee/armee-parking-neon.jpg",         title: "Sous le néon",             category: "armee",     size: "tall" },
   { file: "armee/armee-cowboy-couchant.jpg",      title: "Cow-boy au couchant",      category: "armee",     size: "wide" },
+  { file: "armee/armee-ghillie-montagne.jpg",     title: "Ghillie en haute montagne", category: "armee",    size: "wide" },
 ];
 
 /* Libellés affichés des catégories (filtres et légendes) */
