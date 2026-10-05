@@ -60,6 +60,10 @@ const PHOTOS = [
   { file: "armee/armee-parking-neon.jpg",         title: "Sous le néon",             category: "armee",     size: "tall" },
   { file: "armee/armee-cowboy-couchant.jpg",      title: "Cow-boy au couchant",      category: "armee",     size: "wide" },
   { file: "armee/armee-ghillie-montagne.jpg",     title: "Ghillie en haute montagne", category: "armee",    size: "wide" },
+  { file: "armee/armee-veille-brume.jpg",         title: "Veille au-dessus de la brume", category: "armee", size: "wide" },
+  { file: "armee/armee-vision-nocturne-brume.jpg",title: "Dans la brume du matin",   category: "armee",     size: "wide" },
+  { file: "armee/armee-face-centrale.jpg",        title: "Face à la centrale",       category: "armee",     size: "big"  },
+  { file: "armee/armee-silhouette-centrale.jpg",  title: "Silhouette sous les panaches", category: "armee", size: "wide" },
 ];
 
 /* Libellés affichés des catégories (filtres et légendes) */
