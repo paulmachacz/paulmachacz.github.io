@@ -13,7 +13,7 @@
 # =========================================================
 
 $root = Join-Path (Split-Path -Parent $PSScriptRoot) "images"
-$categories = @("animalier", "armee", "nature", "vehicule")
+$categories = @("animalier", "armee", "nature", "post-traitement", "vehicule")
 
 Add-Type -AssemblyName System.Drawing
 $jpegCodec = [System.Drawing.Imaging.ImageCodecInfo]::GetImageEncoders() | Where-Object { $_.MimeType -eq 'image/jpeg' }

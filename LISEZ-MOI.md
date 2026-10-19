@@ -40,7 +40,7 @@ le site reste donc présentable même incomplet.
 
 ## ✏️ Personnaliser
 - **Nom** : déjà renseigné (Paul Machacz). Modifiable dans `index.html` et `galerie.html`.
-- **Contact** : uniquement via Instagram (@p.m__4) dans le pied de page.
+- **Contact** : uniquement via Instagram (@paul.outpost) dans le pied de page.
   Pour ajouter un email plus tard, ajoutez un bloc dans le `footer__grid`.
 - **Couleur d'accent** : dans `css/style.css`, changez la ligne `--accent: #ff5c38;`.
 - **Catégories** : modifiables dans `js/data.js` (`CATEGORY_LABELS`) et les boutons
